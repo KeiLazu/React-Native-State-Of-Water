@@ -1,13 +1,45 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
 
 export default class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      phase: 'Liquid',
+      temperature: '50'
+    }
+  }
+
+  ChangeState(temp) {
+    if (temp < 32) {
+      this.setState({
+        phase: 'Solid'
+      });
+    } else if (temp > 212) {
+      this.setState({
+        phase: 'Gas'
+      });
+    } else {
+      this.setState({
+        phase: 'Liquid'
+      });
+    }
+
+    this.setState({
+      temperature: temp
+    });
+    
+  }
+  
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+        <Text>{this.state.phase}</Text>
+        <TextInput 
+            keyboardType='numeric'
+            onChangeText={(temp) => this.ChangeState(temp)}
+            value={this.state.temperature}
+        />
       </View>
     );
   }
